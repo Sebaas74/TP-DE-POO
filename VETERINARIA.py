@@ -1,4 +1,3 @@
-
 from datetime import datetime
 
 
@@ -7,7 +6,6 @@ class Usuario:
         self.__nombre = nombre
         self.__telefono = telefono
         self.__direccion = direccion
-
 
     def get_nombre(self): return self.__nombre
     def set_nombre(self, nombre): self.__nombre = nombre
@@ -20,7 +18,6 @@ class Usuario:
 
     def __str__(self):
         return f"{self.__nombre} - Tel: {self.__telefono} - Dir: {self.__direccion}"
-
 
 
 class Mascota:
@@ -67,7 +64,7 @@ class Cliente(Usuario):
         del self.__mascotas[idx]
 
     def get_mascotas(self):
-        return list(self.__mascotas)  
+        return list(self.__mascotas)
 
     def __str__(self):
         return super().__str__()
@@ -87,7 +84,6 @@ class Veterinario(Usuario):
 
     def __str__(self):
         return f"{self.get_nombre()} - {self.__especialidad} - Disponible: {self.__disponible}"
-
 
 
 class Producto:
@@ -153,7 +149,6 @@ class Turno:
         return f"Turno: {self.__cliente.get_nombre()} - {self.__mascota.get_nombre()} con {self.__veterinario.get_nombre()} el {f}"
 
 
-
 class Venta:
     def __init__(self, cliente: Cliente, producto: Producto, cantidad: int):
         if not isinstance(cliente, Cliente):
@@ -193,17 +188,20 @@ def buscar_cliente_por_nombre(nombre: str):
             return c
     return None
 
+
 def buscar_veterinario_por_nombre(nombre: str):
     for v in veterinarios:
         if v.get_nombre().lower() == nombre.lower():
             return v
     return None
 
+
 def buscar_producto_por_nombre(nombre: str):
     for p in productos:
         if p.get_nombre().lower() == nombre.lower():
             return p
     return None
+
 
 def seleccionar_mascota_de_cliente(cliente: Cliente):
     mascotas = cliente.get_mascotas()
@@ -214,16 +212,17 @@ def seleccionar_mascota_de_cliente(cliente: Cliente):
 
     print("El cliente tiene varias mascotas. Elegí por número:")
     for i, m in enumerate(mascotas):
-        print(f"{i+1}. {m}")
+        print(f"{i + 1}. {m}")
     while True:
         try:
             sel = int(input("Número de mascota: "))
             if 1 <= sel <= len(mascotas):
-                return mascotas[sel-1]
+                return mascotas[sel - 1]
             else:
                 print("Número fuera de rango.")
         except ValueError:
             print("Ingresa un número válido.")
+
 
 def leer_fecha(input_text="Fecha y hora (dd/mm/yyyy HH:MM): "):
     while True:
@@ -232,6 +231,7 @@ def leer_fecha(input_text="Fecha y hora (dd/mm/yyyy HH:MM): "):
             return datetime.strptime(txt, "%d/%m/%Y %H:%M")
         except ValueError:
             print("Formato inválido. Usa dd/mm/yyyy HH:MM (por ejemplo: 25/12/2025 14:30).")
+
 
 def menu_principal():
     while True:
@@ -258,7 +258,7 @@ def menu_principal():
             direccion = input("Dirección: ").strip()
             clientes.append(Cliente(nombre, telefono, direccion))
             print("Cliente registrado.")
-            
+
         elif op == "2":
             nombre_cliente = input("Nombre del cliente: ").strip()
             cliente = buscar_cliente_por_nombre(nombre_cliente)
@@ -279,6 +279,7 @@ def menu_principal():
                 print("Mascota agregada al cliente.")
             except Exception as e:
                 print("Error:", e)
+
         elif op == "3":
             if not clientes:
                 print("No hay clientes registrados.")
@@ -299,13 +300,11 @@ def menu_principal():
             veterinarios.append(Veterinario(nombre, telefono, direccion, especialidad))
             print("Veterinario registrado.")
 
-
         elif op == "5":
             if not veterinarios:
                 print("No hay veterinarios registrados.")
             for v in veterinarios:
                 print("-", v)
-
 
         elif op == "6":
             nombre_cliente = input("Nombre del cliente: ").strip()
@@ -330,13 +329,11 @@ def menu_principal():
             except Exception as e:
                 print("Error al registrar turno:", e)
 
-
         elif op == "7":
             if not turnos:
                 print("No hay turnos registrados.")
             for t in turnos:
                 print("-", t)
-
 
         elif op == "8":
             nombre = input("Nombre producto: ").strip()
@@ -352,13 +349,11 @@ def menu_principal():
             except Exception as e:
                 print("Error:", e)
 
-
         elif op == "9":
             if not productos:
                 print("No hay productos registrados.")
             for p in productos:
                 print("-", p)
-
 
         elif op == "10":
             nombre_cliente = input("Nombre del cliente: ").strip()
@@ -383,13 +378,11 @@ def menu_principal():
             except Exception as e:
                 print("Error al registrar venta:", e)
 
-
         elif op == "11":
             if not ventas:
                 print("No hay ventas registradas.")
             for v in ventas:
                 print("-", v)
-
 
         elif op == "12":
             nombre_cliente = input("Nombre del cliente a eliminar: ").strip()
@@ -400,14 +393,31 @@ def menu_principal():
             clientes.remove(cliente)
             print("Cliente eliminado.")
 
-
         elif op == "13":
             nombre_cliente = input("Nombre del cliente: ").strip()
             cliente = buscar_cliente_por_nombre(nombre_cliente)
             if not cliente:
                 print("Cliente no encontrado.")
                 continue
-            mascotas = cliente.get_mascota_
+            mascotas = cliente.get_mascotas()
+            if not mascotas:
+                print("El cliente no tiene mascotas.")
+                continue
+            for i, m in enumerate(mascotas):
+                print(f"{i + 1}. {m}")
+            try:
+                idx = int(input("Número de mascota a eliminar: ")) - 1
+                cliente.eliminar_mascota_por_indice(idx)
+                print("Mascota eliminada.")
+            except Exception as e:
+                print("Error:", e)
+
+        elif op == "14":
+            print("Saliendo del sistema...")
+            break
+
+        else:
+            print("Opción inválida.")
 
 
 if __name__ == "__main__":

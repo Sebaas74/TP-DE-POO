@@ -109,7 +109,7 @@ def menu():
     biblioteca = Biblioteca()
 
     while True:
-        print("\n===== MENÚ BIBLIOTECA =====")
+        print("MENÚ BIBLIOTECA")
         print("1. Agregar libro")
         print("2. Agregar persona")
         print("3. Prestar libro")
@@ -203,3 +203,4 @@ def menu():
 
 if __name__ == "__main__":
     menu()
+

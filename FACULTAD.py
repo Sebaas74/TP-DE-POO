@@ -1,4 +1,4 @@
-# sistema_facultad_completo.py
+
 import time
 class Curso:
     def __init__(self, nombre, codigo, profesor, capacidad):
@@ -8,7 +8,7 @@ class Curso:
         self.__capacidad = int(capacidad)
         self.__estudiantes_inscriptos = []
 
-    # --- Getters / Setters ---
+
     def get_nombre(self): return self.__nombre
     def set_nombre(self, valor): self.__nombre = valor
 
@@ -21,13 +21,13 @@ class Curso:
     def get_capacidad(self): return self.__capacidad
     def set_capacidad(self, valor): self.__capacidad = int(valor)
 
-    # Properties
+
     nombre = property(get_nombre, set_nombre)
     codigo = property(get_codigo, set_codigo)
     profesor = property(get_profesor, set_profesor)
     capacidad = property(get_capacidad, set_capacidad)
 
-    # --- Operaciones ---
+
     def cupos_disponibles(self):
         return self.__capacidad - len(self.__estudiantes_inscriptos)
 
@@ -61,7 +61,7 @@ class Estudiante:
         self.__carrera = carrera
         self.__cursos = []
 
-    # --- Getters / Setters ---
+
     def get_nombre(self): return self.__nombre
     def set_nombre(self, valor): self.__nombre = valor
 
@@ -76,13 +76,12 @@ class Estudiante:
 
     def get_cursos(self): return list(self.__cursos)
 
-    # Properties
     nombre = property(get_nombre, set_nombre)
     apellido = property(get_apellido, set_apellido)
     matricula = property(get_matricula, set_matricula)
     carrera = property(get_carrera, set_carrera)
 
-    # --- Operaciones ---
+
     def inscribe_curso(self, curso):
         if curso in self.__cursos: 
             return False
@@ -105,7 +104,6 @@ class Facultad:
         self.__estudiantes = []
         self.__cursos = []
 
-    # --- Gestión de estudiantes ---
     def alta_estudiante(self, nombre, apellido, matricula, carrera):
         if self.get_estudiante(matricula): 
             return False
@@ -132,7 +130,7 @@ class Facultad:
     def listado_estudiantes(self):
         return list(self.__estudiantes)
 
-    # --- Gestión de cursos ---
+
     def alta_curso(self, nombre, codigo, profesor, capacidad):
         if self.get_curso(codigo): 
             return False
@@ -159,7 +157,7 @@ class Facultad:
     def listado_cursos(self):
         return list(self.__cursos)
 
-    # --- Inscripciones ---
+
     def inscribe_estudiante_curso(self, matricula, codigo):
         estudiante = self.get_estudiante(matricula)
         if not estudiante: 
@@ -188,7 +186,6 @@ class Facultad:
         return False, "El estudiante no estaba inscripto en ese curso."
 
 
-# ----------------- MENÚ -----------------
 def mostrar_menu():
     print("MENÚ FACULTAD")
     print("1. Alta de estudiante")
@@ -289,6 +286,6 @@ def ejecutar_menu():
             print("Opción inválida, intente nuevamente.")
             time.sleep(2)
 
-# ----------------- PROGRAMA PRINCIPAL -----------------
+
 if __name__ == "__main__":
     ejecutar_menu()
